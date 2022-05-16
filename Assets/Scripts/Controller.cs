@@ -214,23 +214,33 @@ public class Controller : MonoBehaviour
                  
         int indexcurrentTile;        
 
-        if (cop==true)
-            indexcurrentTile = cops[clickedCop].GetComponent<CopMove>().currentTile;
-        else
-            indexcurrentTile = robber.GetComponent<RobberMove>().currentTile;
+        if (cop==true) indexcurrentTile = cops[clickedCop].GetComponent<CopMove>().currentTile;
+        else indexcurrentTile = robber.GetComponent<RobberMove>().currentTile;
 
         //La ponemos rosa porque acabamos de hacer un reset
         tiles[indexcurrentTile].current = true;
 
         //Cola para el BFS
-        Queue<Tile> nodes = new Queue<Tile>();
+        //Queue<Tile> nodes = new Queue<Tile>();
 
         //TODO: Implementar BFS. Los nodos seleccionables los ponemos como selectable=true
         //Tendrás que cambiar este código por el BFS
         for(int i = 0; i < Constants.NumTiles; i++)
         {
-            tiles[i].selectable = true;
+            tiles[i].selectable = false;
         }
+
+        foreach (int casillaAdyacente in tiles[indexcurrentTile].adjacency)
+        {
+            tiles[casillaAdyacente].selectable = true;
+
+            foreach (int casillaAdyacente2 in tiles[casillaAdyacente].adjacency)
+            {
+                tiles[casillaAdyacente2].selectable = true;
+            }
+        }
+
+
 
 
     }
