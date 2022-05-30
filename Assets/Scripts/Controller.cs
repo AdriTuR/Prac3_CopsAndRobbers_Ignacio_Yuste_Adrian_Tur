@@ -163,12 +163,12 @@ public class Controller : MonoBehaviour
         tiles[clickedTile].current = true;
         FindSelectableTiles(false);
 
-        /*TODO: Cambia el código de abajo para hacer lo siguiente
-        - Elegimos una casilla aleatoria entre las seleccionables que puede ir el caco
-        - Movemos al caco a esa casilla
-        - Actualizamos la variable currentTile del caco a la nueva casilla
-        */
-        robber.GetComponent<RobberMove>().MoveToTile(tiles[robber.GetComponent<RobberMove>().currentTile]);
+        //Movimiento Aleatorio del Ladron
+        int numCasillasAdyacentes = tiles[robber.GetComponent<RobberMove>().currentTile].adjacency.Count - 1;
+        Tile casillaRandomAdyacenteLadron = tiles[tiles[robber.GetComponent<RobberMove>().currentTile].adjacency[Random.Range(0, numCasillasAdyacentes)]];
+        
+        robber.GetComponent<RobberMove>().MoveToTile(casillaRandomAdyacenteLadron);
+        robber.GetComponent<RobberMove>().currentTile = casillaRandomAdyacenteLadron.numTile;
     }
 
     public void EndGame(bool end)
@@ -220,11 +220,6 @@ public class Controller : MonoBehaviour
         //La ponemos rosa porque acabamos de hacer un reset
         tiles[indexcurrentTile].current = true;
 
-        //Cola para el BFS
-        //Queue<Tile> nodes = new Queue<Tile>();
-
-        //TODO: Implementar BFS. Los nodos seleccionables los ponemos como selectable=true
-        //Tendrás que cambiar este código por el BFS
         for(int i = 0; i < Constants.NumTiles; i++)
         {
             tiles[i].selectable = false;
